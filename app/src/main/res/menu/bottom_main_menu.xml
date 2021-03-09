@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/dashboard"
+        android:title=""
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/transactions"
+        android:enabled="true"
+        android:title=""
+        android:icon="@drawable/transaction"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/validating"
+        android:enabled="true"
+        android:title=""
+        android:icon="@drawable/mining"
+        app:showAsAction="ifRoom" />
+</menu>

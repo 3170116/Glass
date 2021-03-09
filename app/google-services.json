@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "141574445883",
+    "project_id": "glass-1310a",
+    "storage_bucket": "glass-1310a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141574445883:android:d97f1c506c7437ef75351e",
+        "android_client_info": {
+          "package_name": "com.aueb.glass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141574445883-jt15iinvd22lme12l6v0hhc2cnp6rhhp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC40YhIxW2P0WUZXHKdTEv3gOhnz39K3o4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "141574445883-jt15iinvd22lme12l6v0hhc2cnp6rhhp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
