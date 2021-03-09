@@ -82,33 +82,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.top_main_menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.logout:
-//                AuthUI.getInstance()
-//                        .signOut(this)
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                LoginFragment loginFragment = new LoginFragment();
-//                                fragmentManager.beginTransaction().replace(R.id.frameLayout, loginFragment).commit();
-//
-//                                setTitle("Glass");
-//                            }
-//                        });
-//
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.more:
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
