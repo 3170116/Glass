@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import com.aueb.glass.R;
 
-public class TransactionsFragment extends Fragment {
+public class TicketsFragment extends Fragment {
 
-    public TransactionsFragment() {
+    public TicketsFragment() {
 
     }
 
@@ -22,7 +22,7 @@ public class TransactionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_transactions, container, false);
+        View view = inflater.inflate(R.layout.fragment_tickets, container, false);
 
         return view;
     }

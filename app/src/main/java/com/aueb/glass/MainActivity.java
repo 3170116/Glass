@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.aueb.glass.fragments.DashboardAccountFragment;
@@ -22,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public static GoogleSignInAccount account;
 
     public static FragmentManager fragmentManager;
+
+    private Menu myMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +81,17 @@ public class MainActivity extends AppCompatActivity {
         if (account != null) {
             DashboardAccountFragment dashboardAccountFragment = new DashboardAccountFragment();
             fragmentManager.beginTransaction().replace(R.id.frameLayout, dashboardAccountFragment).commit();
-            //FirebaseAuth.getInstance().signOut();
+
+            if (myMenu != null) {
+                myMenu.findItem(R.id.more).setVisible(true);
+            }
         } else {
             LoginFragment loginFragment = new LoginFragment();
             fragmentManager.beginTransaction().replace(R.id.frameLayout, loginFragment).commit();
+
+            if (myMenu != null) {
+                myMenu.findItem(R.id.more).setVisible(false);
+            }
         }
     }
 
@@ -86,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.top_main_menu, menu);
+
+        myMenu = menu;
+
+        if (account == null) {
+            menu.findItem(R.id.more).setVisible(false);
+        }
         return true;
     }
 
@@ -118,6 +137,27 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+//    public void submitTransaction(View view) {
+//        TextInputLayout orderIdLayout = findViewById(R.id.orderIdTextLayout);
+//        TextInputEditText orderId = findViewById(R.id.orderIdText);
+//
+//        TextInputLayout transactionTypeLayout = findViewById(R.id.transactionTypeLayout);
+//        AutoCompleteTextView transactionType = findViewById(R.id.transactionTypeText);
+//
+//        if (orderId.getText() == null || orderId.getText().length() == 0) {
+//            orderIdLayout.setHelperText("Required *");
+//        } else {
+//            orderIdLayout.setHelperText("");
+//        }
+//
+//        if (transactionType.getText() == null || transactionType.getText().length() == 0) {
+//            transactionTypeLayout.setHelperText("Please select a type *");
+//        } else {
+//            transactionTypeLayout.setHelperText("");
+//        }
+//    }
 
 
     private void firebaseAuthWithGoogle(String idToken) {

@@ -42,31 +42,14 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        EditText address = view.findViewById(R.id.addressText);
-        address.setText(MainActivity.account.getId());
+        ImageView profileImage = view.findViewById(R.id.userProfileImage);
+        Picasso.with(getActivity().getApplicationContext()).load(MainActivity.account.getPhotoUrl()).into(profileImage);
 
         TextInputEditText firstName = view.findViewById(R.id.fullNameText);
         firstName.setText(MainActivity.account.getDisplayName());
 
         TextInputEditText email = view.findViewById(R.id.email);
         email.setText(MainActivity.account.getEmail());
-
-        ImageView qrCode = view.findViewById(R.id.qrCodeImg);
-        Picasso.with(getActivity().getApplicationContext()).load("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" + MainActivity.account.getId()).into(qrCode);
-
-        Button share = view.findViewById(R.id.shareButton);
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("simple text", MainActivity.account.getId());
-
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(getActivity().getApplicationContext(), "Copied to clipboard!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         return view;
     }
