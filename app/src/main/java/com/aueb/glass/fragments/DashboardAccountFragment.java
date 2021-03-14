@@ -2,6 +2,7 @@ package com.aueb.glass.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,8 +15,6 @@ import com.aueb.glass.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DashboardAccountFragment extends Fragment {
-
-    private int fragmentIndex;
 
     public DashboardAccountFragment() {
 
@@ -30,10 +29,6 @@ public class DashboardAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
-        MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new SearchFragment()).commit();
-        getActivity().setTitle("Search Online Events");
-        setSearchFragmentIndex();
 
         BottomNavigationView bottomNavigationView = view.findViewById(R.id.dashboardMenu);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,31 +64,48 @@ public class DashboardAccountFragment extends Fragment {
             }
         });
 
+        if (MainActivity.FragmentIndex == 0 || MainActivity.FragmentIndex == 1) {
+            MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new SearchFragment()).commit();
+            getActivity().setTitle("Search Online Events");
+            bottomNavigationView.setSelectedItemId(R.id.search);
+            setSearchFragmentIndex();
+        } else if(MainActivity.FragmentIndex == 2) {
+            MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new TicketsFragment()).commit();
+            getActivity().setTitle("My Tickets");
+            bottomNavigationView.setSelectedItemId(R.id.ticket);
+            setTicketsFragmentIndex();
+        } else {
+            MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new HomeFragment()).commit();
+            getActivity().setTitle("Profile");
+            bottomNavigationView.setSelectedItemId(R.id.home);
+            setProfileFragmentIndex();
+        }
+
         return view;
     }
 
 
     private void setSearchFragmentIndex() {
-        this.fragmentIndex = 1;
+        MainActivity.FragmentIndex = 1;
     }
 
     private boolean isSearchFragmentOpen() {
-        return this.fragmentIndex == 1;
+        return MainActivity.FragmentIndex == 1;
     }
 
     private void setTicketsFragmentIndex() {
-        this.fragmentIndex = 2;
+        MainActivity.FragmentIndex = 2;
     }
 
     private boolean isTicketsFragmentOpen() {
-        return this.fragmentIndex == 2;
+        return MainActivity.FragmentIndex == 2;
     }
 
     private void setProfileFragmentIndex() {
-        this.fragmentIndex = 3;
+        MainActivity.FragmentIndex = 3;
     }
 
     private  boolean isProfileFragmentOpen() {
-        return this.fragmentIndex == 3;
+        return MainActivity.FragmentIndex == 3;
     }
 }

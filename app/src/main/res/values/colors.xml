@@ -11,4 +11,6 @@
     <color name="red">#ED3E3E</color>
     <color name="grey">#8C8C84</color>
     <color name="lightGrey">#D3D3C0</color>
+
+    <color name="success">#179C55</color>
 </resources>

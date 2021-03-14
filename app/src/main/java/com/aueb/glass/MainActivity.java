@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int RC_SIGN_IN = 17;
 
+    public static int FragmentIndex;
+
     public static FirebaseAuth mAuth;
     public static GoogleSignInOptions gso;
     public static GoogleSignInClient mGoogleSignInClient;
