@@ -141,27 +141,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void submitTransaction(View view) {
-//        TextInputLayout orderIdLayout = findViewById(R.id.orderIdTextLayout);
-//        TextInputEditText orderId = findViewById(R.id.orderIdText);
-//
-//        TextInputLayout transactionTypeLayout = findViewById(R.id.transactionTypeLayout);
-//        AutoCompleteTextView transactionType = findViewById(R.id.transactionTypeText);
-//
-//        if (orderId.getText() == null || orderId.getText().length() == 0) {
-//            orderIdLayout.setHelperText("Required *");
-//        } else {
-//            orderIdLayout.setHelperText("");
-//        }
-//
-//        if (transactionType.getText() == null || transactionType.getText().length() == 0) {
-//            transactionTypeLayout.setHelperText("Please select a type *");
-//        } else {
-//            transactionTypeLayout.setHelperText("");
-//        }
-//    }
-
-
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)

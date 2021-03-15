@@ -28,6 +28,8 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
+        getActivity().setTitle("");
+
         Button googleBtn = view.findViewById(R.id.googleBtn);
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
