@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -48,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Menu myMenu;
 
+    public static SharedPreferences sharedPreferences;
+    public static SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Initialize Firebase App
@@ -84,8 +89,17 @@ public class MainActivity extends AppCompatActivity {
             DashboardAccountFragment dashboardAccountFragment = new DashboardAccountFragment();
             fragmentManager.beginTransaction().replace(R.id.frameLayout, dashboardAccountFragment).commit();
 
+            sharedPreferences = getSharedPreferences(account.getId(), Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+
             if (myMenu != null) {
                 myMenu.findItem(R.id.more).setVisible(true);
+
+                if (sharedPreferences.getBoolean("IsOrganizer", false)) {
+                    myMenu.findItem(R.id.events).setVisible(true);
+                } else {
+                    myMenu.findItem(R.id.events).setVisible(false);
+                }
             }
         } else {
             LoginFragment loginFragment = new LoginFragment();
@@ -93,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (myMenu != null) {
                 myMenu.findItem(R.id.more).setVisible(false);
+                myMenu.findItem(R.id.events).setVisible(false);
             }
         }
     }
@@ -113,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.events:
+                return true;
             case R.id.more:
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
@@ -138,6 +155,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("Account ID", "Google sign in failed", e);
             }
         }
+    }
+
+
+    public void saveProfile(View view) {
+        editor.putString("FullName", ((com.google.android.material.textfield.TextInputEditText) findViewById(R.id.fullNameText)).getText() + "");
+        editor.putString("Email", ((com.google.android.material.textfield.TextInputEditText) findViewById(R.id.email)).getText() + "");
+        editor.putString("Phone", ((com.google.android.material.textfield.TextInputEditText) findViewById(R.id.phone)).getText() + "");
+
+        editor.apply();
+
+        Toast.makeText(getApplicationContext(), "Changes have been saved!", Toast.LENGTH_SHORT).show();
     }
 
 

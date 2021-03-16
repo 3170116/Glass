@@ -46,10 +46,23 @@ public class HomeFragment extends Fragment {
         Picasso.with(getActivity().getApplicationContext()).load(MainActivity.account.getPhotoUrl()).into(profileImage);
 
         TextInputEditText firstName = view.findViewById(R.id.fullNameText);
-        firstName.setText(MainActivity.account.getDisplayName());
+
+        if (MainActivity.sharedPreferences.getString("FullName", "").isEmpty()) {
+            firstName.setText(MainActivity.account.getDisplayName());
+        } else {
+            firstName.setText(MainActivity.sharedPreferences.getString("FullName", ""));
+        }
 
         TextInputEditText email = view.findViewById(R.id.email);
-        email.setText(MainActivity.account.getEmail());
+
+        if (MainActivity.sharedPreferences.getString("Email", "").isEmpty()) {
+            email.setText(MainActivity.account.getEmail());
+        } else {
+            email.setText(MainActivity.sharedPreferences.getString("Email", ""));
+        }
+
+        TextInputEditText phone = view.findViewById(R.id.phone);
+        phone.setText(MainActivity.sharedPreferences.getString("Phone", ""));
 
         return view;
     }
