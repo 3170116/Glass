@@ -127,11 +127,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = null;
+
         switch (item.getItemId()) {
             case R.id.events:
+                intent = new Intent(getApplicationContext(), EventsActivity.class);
+                startActivity(intent);
+
                 return true;
             case R.id.more:
-                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
 
                 return true;
