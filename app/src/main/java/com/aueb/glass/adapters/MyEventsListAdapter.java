@@ -7,8 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
+import com.aueb.glass.EventsActivity;
 import com.aueb.glass.R;
+import com.aueb.glass.fragments.EditEventFragment;
 import com.aueb.glass.models.Event;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
@@ -60,6 +66,15 @@ public class MyEventsListAdapter extends BaseAdapter {
 
         TextInputEditText myRemainingTickets = convertView.findViewById(R.id.myEventRemainingTickets);
         myRemainingTickets.setText(myEvent.getRemainingTickets() + "");
+
+        MaterialButton edit = convertView.findViewById(R.id.myEventEditButton);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditEventFragment editEventFragment = new EditEventFragment(myEvent);
+                editEventFragment.show(EventsActivity.fragmentManager, "Edit Event");
+            }
+        });
 
         return convertView;
     }

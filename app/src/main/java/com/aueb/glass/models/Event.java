@@ -5,6 +5,8 @@ import java.util.Date;
 public class Event {
 
     //βασικες πληροφοριες
+    private String id;
+    private String organizerId;
     private String name;
     private String description;
     private String url;
@@ -13,9 +15,25 @@ public class Event {
     private int remainingTickets;
     //ρυθμισεις
     private int maxTickets;
-    private boolean enableLiveChat;
+    private boolean showLiveParticipants;
 
     public Event() { }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOrganizerId() {
+        return organizerId;
+    }
+
+    public void setOrganizerId(String organizerId) {
+        this.organizerId = organizerId;
+    }
 
     public String getName() {
         return name;
@@ -73,12 +91,16 @@ public class Event {
         this.maxTickets = maxTickets;
     }
 
-    public boolean isEnableLiveChat() {
-        return enableLiveChat;
+    public boolean isShowLiveParticipants() {
+        return showLiveParticipants;
     }
 
-    public void setEnableLiveChat(boolean enableLiveChat) {
-        this.enableLiveChat = enableLiveChat;
+    public void setShowLiveParticipants(boolean showLiveParticipants) {
+        this.showLiveParticipants = showLiveParticipants;
+    }
+
+    public void increaseRemainingTickets() {
+        this.remainingTickets += 1;
     }
 
     public void decreaseRemainingTickets() {

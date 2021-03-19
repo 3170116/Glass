@@ -1,18 +1,12 @@
 package com.aueb.glass;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
-import android.app.FragmentManager;
+
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
-import com.aueb.glass.adapters.MyEventsListAdapter;
 import com.aueb.glass.fragments.MyEventsFragment;
-import com.aueb.glass.fragments.SearchFragment;
-import com.aueb.glass.models.Event;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventsActivity extends AppCompatActivity {
 
@@ -28,7 +22,7 @@ public class EventsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
     }
 
     @Override
