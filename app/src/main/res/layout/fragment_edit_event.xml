@@ -80,27 +80,83 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <CalendarView
-                android:id="@+id/eventStartDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/app_name" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Start date" />
-
-            <CalendarView
-                android:id="@+id/eventEndDate"
+                android:id="@+id/eventDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="End date"/>
+                android:layout_marginLeft="20dp"
+                android:text="Event date" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/grey"
+                app:helperText="Start hour">
+
+                <AutoCompleteTextView
+                    android:id="@+id/eventStartHour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/grey"
+                app:helperText="Start minute">
+
+                <AutoCompleteTextView
+                    android:id="@+id/eventStartMinute"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/grey"
+                app:helperText="End hour">
+
+                <AutoCompleteTextView
+                    android:id="@+id/eventEndHour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/grey"
+                app:helperText="End minute">
+
+                <AutoCompleteTextView
+                    android:id="@+id/eventEndMinute"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -115,6 +171,59 @@
                 android:layout_height="1dp"
                 android:background="@color/black" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/grey"
+                app:helperText="Maximum tickets"
+                app:startIconDrawable="@drawable/ic_ticket">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eventMaxTickets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/grey"
+                app:helperText="Remaining tickets"
+                app:startIconDrawable="@drawable/ic_ticket">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eventRemainingTickets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:enabled="false"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/eventShowLiveParticipants"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="Show live participants"
+                app:thumbTint="@color/success"
+                app:trackTint="@color/lightSuccess"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/eventIsPublished"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="Is published"
+                app:thumbTint="@color/success"
+                app:trackTint="@color/lightSuccess"/>
+
             <Button
                 android:id="@+id/editEventButton"
                 style="@style/SuccessBtn"
@@ -123,6 +232,16 @@
                 android:layout_margin="10dp"
                 android:text="Save"
                 android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/deleteEventButton"
+                style="@style/DangerBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Delete event permanent"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

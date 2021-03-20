@@ -89,15 +89,24 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/myEventEditButton"
-                    style="?attr/borderlessButtonStyle"
+                    style="@style/SecondaryBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Edit"
                     android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    app:icon="@drawable/ic_edit"
-                    app:iconTint="@color/black"/>
+                    app:icon="@drawable/ic_edit" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/myEventOptionsButton"
+                    style="@style/SecondaryBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Options"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_vote" />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -56,13 +56,11 @@ public class MyEventsListAdapter extends BaseAdapter {
         TextView title = convertView.findViewById(R.id.myEventTitle);
         title.setText(myEvent.getName());
 
-        SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy h:mm a");
-
         TextInputEditText startDate = convertView.findViewById(R.id.myEventStartDate);
-        startDate.setText(dateFormat.format(myEvent.getStartDate().getTime()));
+        startDate.setText(myEvent.getStartDateToDisplay());
 
         TextInputEditText endDate = convertView.findViewById(R.id.myEventEndDate);
-        endDate.setText(dateFormat.format(myEvent.getEndDate().getTime()));
+        endDate.setText(myEvent.getEndDateToDisplay());
 
         TextInputEditText myRemainingTickets = convertView.findViewById(R.id.myEventRemainingTickets);
         myRemainingTickets.setText(myEvent.getRemainingTickets() + "");
@@ -73,6 +71,14 @@ public class MyEventsListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 EditEventFragment editEventFragment = new EditEventFragment(myEvent);
                 editEventFragment.show(EventsActivity.fragmentManager, "Edit Event");
+            }
+        });
+
+        MaterialButton options = convertView.findViewById(R.id.myEventOptionsButton);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

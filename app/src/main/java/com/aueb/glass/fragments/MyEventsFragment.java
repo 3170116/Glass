@@ -9,9 +9,11 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import com.aueb.glass.EventsActivity;
 import com.aueb.glass.R;
 import com.aueb.glass.adapters.MyEventsListAdapter;
 import com.aueb.glass.models.Event;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,7 +44,7 @@ public class MyEventsFragment extends Fragment {
         //για δοκιμες
         Event testEvent = new Event();
 
-        testEvent.setId("");
+        testEvent.setId("fdg80d");
         testEvent.setName("Σεμινάριο πρώτων βοηθειών");
 
         Calendar calendar = Calendar.getInstance();
@@ -61,6 +63,8 @@ public class MyEventsFragment extends Fragment {
         testEvent.setEndDate(calendar.getTime());
         testEvent.setRemainingTickets(12);
 
+        testEvent.setPublished(true);
+
         myEvents.add(testEvent);
         //
 
@@ -68,6 +72,15 @@ public class MyEventsFragment extends Fragment {
 
         myEventsList.setAdapter(myEventsListAdapter);
         myEventsListAdapter.notifyDataSetChanged();
+
+        FloatingActionButton addEvent = view.findViewById(R.id.fabAddEvent);
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditEventFragment editEventFragment = new EditEventFragment(new Event());
+                editEventFragment.show(EventsActivity.fragmentManager, "Create Event");
+            }
+        });
 
         return view;
     }

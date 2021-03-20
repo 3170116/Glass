@@ -13,4 +13,5 @@
     <color name="lightGrey">#D3D3C0</color>
 
     <color name="success">#179C55</color>
+    <color name="lightSuccess">#1BDA74</color>
 </resources>

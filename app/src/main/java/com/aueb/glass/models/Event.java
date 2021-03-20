@@ -1,5 +1,6 @@
 package com.aueb.glass.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Event {
@@ -16,6 +17,7 @@ public class Event {
     //ρυθμισεις
     private int maxTickets;
     private boolean showLiveParticipants;
+    private boolean isPublished;
 
     public Event() { }
 
@@ -99,12 +101,30 @@ public class Event {
         this.showLiveParticipants = showLiveParticipants;
     }
 
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    public void setPublished(boolean published) {
+        isPublished = published;
+    }
+
     public void increaseRemainingTickets() {
         this.remainingTickets += 1;
     }
 
     public void decreaseRemainingTickets() {
         this.remainingTickets -= 1;
+    }
+
+    public String getStartDateToDisplay() {
+        SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy h:mm a");
+        return dateFormat.format(this.startDate.getTime());
+    }
+
+    public String getEndDateToDisplay() {
+        SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy h:mm a");
+        return dateFormat.format(this.endDate.getTime());
     }
 
 }
