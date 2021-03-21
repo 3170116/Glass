@@ -127,4 +127,8 @@ public class Event {
         return dateFormat.format(this.endDate.getTime());
     }
 
+    public boolean isExpired() {
+        return this.startDate.after(new Date());
+    }
+
 }

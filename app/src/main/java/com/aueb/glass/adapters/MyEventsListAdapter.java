@@ -13,11 +13,14 @@ import androidx.fragment.app.DialogFragment;
 import com.aueb.glass.EventsActivity;
 import com.aueb.glass.R;
 import com.aueb.glass.fragments.EditEventFragment;
+import com.aueb.glass.fragments.VotingOptionsFragment;
 import com.aueb.glass.models.Event;
+import com.aueb.glass.models.VotingOption;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -78,7 +81,15 @@ public class MyEventsListAdapter extends BaseAdapter {
         options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                VotingOption option1 = new VotingOption("Μου αρέσει", VotingOption.LIKE_OPTION, true);
+                VotingOption option2 = new VotingOption("Δεν μου αρέσει", VotingOption.DISLIKE_OPTION, false);
 
+                List<VotingOption> myOptions = new ArrayList<>();
+                myOptions.add(option1);
+                myOptions.add(option2);
+
+                VotingOptionsFragment votingOptionsFragment = new VotingOptionsFragment(myOptions);
+                votingOptionsFragment.show(EventsActivity.fragmentManager, "Edit Options");
             }
         });
 
