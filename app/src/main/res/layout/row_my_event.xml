@@ -37,7 +37,7 @@
                 android:layout_marginTop="10dp"
                 app:startIconDrawable="@drawable/ic_events"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="Start date">
+                app:helperText="Ημερομηνία έναρξης">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/myEventStartDate"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="10dp"
                 app:startIconDrawable="@drawable/ic_events"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="End date">
+                app:helperText="Ημερομηνία λήξης">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/myEventEndDate"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="10dp"
                 app:startIconDrawable="@drawable/ic_ticket"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="Remaining tickets">
+                app:helperText="Υπολειπόμενα εισιτήρια">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/myEventRemainingTickets"
@@ -82,30 +82,32 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/myEventEditButton"
                     style="@style/SecondaryBtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="Edit"
+                    android:text="Επεξεργασία"
                     android:textAllCaps="false"
-                    app:icon="@drawable/ic_edit" />
+                    app:icon="@drawable/ic_edit"
+                    app:iconGravity="textStart"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/myEventOptionsButton"
                     style="@style/SecondaryBtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="Options"
+                    android:text="Επιλογές"
                     android:textAllCaps="false"
-                    app:icon="@drawable/ic_vote" />
+                    app:icon="@drawable/ic_vote"
+                    app:iconGravity="textStart"/>
 
             </LinearLayout>
 

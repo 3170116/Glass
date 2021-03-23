@@ -29,7 +29,7 @@ public class MyEventsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("My Events");
+        getActivity().setTitle("Οι εκδηλώσεις μου");
     }
 
     @Override

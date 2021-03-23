@@ -1,12 +1,7 @@
 <resources>
     <string name="app_name">Online Events</string>
 
-    <string-array name="transactions">
-        <item>Add</item>
-        <item>Send</item>
-        <item>Receive</item>
-        <item>Destroy</item>
-    </string-array>
+    <string name="save">Αποθήκευση</string>
 
     <string-array name="hours">
         <item>0</item>
@@ -41,4 +36,15 @@
         <item>30</item>
         <item>45</item>
     </string-array>
+
+    <string-array name="availableOptions">
+        <item>Μου αρέσει</item>
+        <item>Δε μου αρέσει</item>
+        <item>Διάλειμμα</item>
+        <item>Ας συνεχίσουμε</item>
+        <item>Συμφωνώ</item>
+        <item>Διαφωνώ</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.aueb.glass.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Organizer {
 
     private String id;
@@ -8,6 +11,8 @@ public class Organizer {
     private String phone;
     private String companyName;
     private String companyDescription;
+
+    private List<Event> myEvents;
 
     public Organizer() { }
 
@@ -57,6 +62,13 @@ public class Organizer {
 
     public void setCompanyDescription(String companyDescription) {
         this.companyDescription = companyDescription;
+    }
+
+    public void addNewEvent(Event myEvent) {
+        if (this.myEvents == null) {
+            this.myEvents = new ArrayList<>();
+        }
+        this.myEvents.add(myEvent);
     }
 
 }

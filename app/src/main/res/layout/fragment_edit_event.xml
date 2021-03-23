@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="General Information"
+                android:text="Γενικές πληροφορίες"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="Name">
+                app:helperText="Όνομα">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/eventName"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="Description">
+                app:helperText="Περιγραφή">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/eventDescription"
@@ -88,49 +88,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="Event date" />
+                android:text="Ημερομηνία εκδήλωσης" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:boxStrokeColor="@color/grey"
-                app:helperText="Start hour">
+                android:orientation="horizontal">
 
-                <AutoCompleteTextView
-                    android:id="@+id/eventStartHour"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="4dp"
+                    app:boxStrokeColor="@color/grey"
+                    app:helperText="Ώρα έναρξης"
+                    android:layout_weight="0.5">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <AutoCompleteTextView
+                        android:id="@+id/eventStartHour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:boxStrokeColor="@color/grey"
-                app:helperText="Start minute">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <AutoCompleteTextView
-                    android:id="@+id/eventStartMinute"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="4dp"
+                    app:boxStrokeColor="@color/grey"
+                    app:helperText="Λεπτό έναρξης"
+                    android:layout_weight="0.5">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <AutoCompleteTextView
+                        android:id="@+id/eventStartMinute"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="4dp"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="End hour">
+                app:helperText="Ώρα λήξης"
+                android:layout_weight="0.5">
 
                 <AutoCompleteTextView
                     android:id="@+id/eventEndHour"
@@ -146,8 +163,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="4dp"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="End minute">
+                app:helperText="Λεπτό λήξης"
+                android:layout_weight="0.5">
 
                 <AutoCompleteTextView
                     android:id="@+id/eventEndMinute"
@@ -158,10 +177,12 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+        </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Settings"
+                android:text="Ρυθμίσεις"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_marginTop="6dp"/>
@@ -177,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="Maximum tickets"
+                app:helperText="Μέγιστος αριθμός εισιτηρίων"
                 app:startIconDrawable="@drawable/ic_ticket">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -194,7 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/grey"
-                app:helperText="Remaining tickets"
+                app:helperText="Υπολειπόμενα εισιτήρια"
                 app:startIconDrawable="@drawable/ic_ticket">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -211,7 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:checked="true"
-                android:text="Show live participants"
+                android:text="Live προβολή συμμετεχόντων"
                 app:thumbTint="@color/success"
                 app:trackTint="@color/lightSuccess"/>
 
@@ -220,7 +241,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:checked="true"
-                android:text="Is published"
+                android:text="Να δημοσιευτεί"
                 app:thumbTint="@color/success"
                 app:trackTint="@color/lightSuccess"/>
 
@@ -230,7 +251,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Save"
+                android:text="@string/save"
                 android:textAllCaps="false" />
 
             <Button
@@ -239,7 +260,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Delete event permanent"
+                android:text="Διαγραφή εκδήλωσης"
                 android:textAllCaps="false"
                 android:visibility="gone"/>
 

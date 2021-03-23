@@ -81,12 +81,12 @@ public class MyEventsListAdapter extends BaseAdapter {
         options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                VotingOption option1 = new VotingOption("Μου αρέσει", VotingOption.LIKE_OPTION, true);
-                VotingOption option2 = new VotingOption("Δεν μου αρέσει", VotingOption.DISLIKE_OPTION, false);
-
                 List<VotingOption> myOptions = new ArrayList<>();
-                myOptions.add(option1);
-                myOptions.add(option2);
+                String[] allOptions = context.getResources().getStringArray(R.array.availableOptions);
+
+                for (int i = 0; i < allOptions.length; i++) {
+                    myOptions.add(new VotingOption(allOptions[i], i + 1, false));
+                }
 
                 VotingOptionsFragment votingOptionsFragment = new VotingOptionsFragment(myOptions);
                 votingOptionsFragment.show(EventsActivity.fragmentManager, "Edit Options");

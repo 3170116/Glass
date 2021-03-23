@@ -39,21 +39,21 @@ public class DashboardAccountFragment extends Fragment {
                     case R.id.search:
                         if (!isSearchFragmentOpen()) {
                             MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new SearchFragment()).commit();
-                            getActivity().setTitle("Search Online Events");
+                            getActivity().setTitle("Αναζήτηση εκδηλώσεων");
                             setSearchFragmentIndex();
                         }
                         break;
                     case R.id.ticket:
                         if (!isTicketsFragmentOpen()) {
                             MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new TicketsFragment()).commit();
-                            getActivity().setTitle("My Tickets");
+                            getActivity().setTitle("Εισιτήρια");
                             setTicketsFragmentIndex();
                         }
                         break;
                     case R.id.home:
                         if (!isProfileFragmentOpen()) {
                             MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new HomeFragment()).commit();
-                            getActivity().setTitle("Profile");
+                            getActivity().setTitle("Προφίλ");
                             setProfileFragmentIndex();
                         }
                         break;
@@ -66,17 +66,17 @@ public class DashboardAccountFragment extends Fragment {
 
         if (MainActivity.FragmentIndex == 0 || MainActivity.FragmentIndex == 1) {
             MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new SearchFragment()).commit();
-            getActivity().setTitle("Search Online Events");
+            getActivity().setTitle("Αναζήτηση εκδηλώσεων");
             bottomNavigationView.setSelectedItemId(R.id.search);
             setSearchFragmentIndex();
         } else if(MainActivity.FragmentIndex == 2) {
             MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new TicketsFragment()).commit();
-            getActivity().setTitle("My Tickets");
+            getActivity().setTitle("Εισιτήρια");
             bottomNavigationView.setSelectedItemId(R.id.ticket);
             setTicketsFragmentIndex();
         } else {
             MainActivity.fragmentManager.beginTransaction().replace(R.id.dashboardFrameLayout, new HomeFragment()).commit();
-            getActivity().setTitle("Profile");
+            getActivity().setTitle("Προφίλ");
             bottomNavigationView.setSelectedItemId(R.id.home);
             setProfileFragmentIndex();
         }

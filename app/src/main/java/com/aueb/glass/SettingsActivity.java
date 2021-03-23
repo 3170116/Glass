@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        setTitle("Settings");
+        setTitle("Ρυθμίσεις");
     }
 
     @Override
@@ -52,10 +52,10 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    organizer.setText("I am an organizer");
+                    organizer.setText("Είμαι οργανωτής");
                     companyInfo.setVisibility(View.VISIBLE);
                 } else {
-                    organizer.setText("I am not an organizer");
+                    organizer.setText("Δεν είμαι οργανωτής");
                     companyInfo.setVisibility(View.GONE);
                 }
             }
@@ -111,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         editor.apply();
 
-        Toast.makeText(getApplicationContext(), "Changes have been saved!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
 
         finish();
     }

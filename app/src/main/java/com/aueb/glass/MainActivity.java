@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
         editor.apply();
 
-        Toast.makeText(getApplicationContext(), "Changes have been saved!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
     }
 
 

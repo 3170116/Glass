@@ -1,51 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/profileSaveButton"
+        app:layout_constraintBottom_toTopOf="@+id/saveParticipantButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/userProfileImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="20dp"
-                tools:srcCompat="@tools:sample/avatars" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Όνομα"
                 app:boxStrokeColor="@color/grey"
-                app:hintTextColor="@color/grey">
+                app:helperText="Όνομα">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fullNameText"
+                    android:id="@+id/participantFirstName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:textColor="@color/grey" />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,17 +39,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Email"
+                android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/grey"
-                app:hintTextColor="@color/grey">
+                app:helperText="Επίθετο">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
+                    android:id="@+id/participantLastName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:textColor="@color/grey" />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,18 +54,31 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Τηλέφωνο επικοινωνίας"
+                android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/grey"
-                app:hintTextColor="@color/grey">
+                app:helperText="Email">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phone"
+                    android:id="@+id/participantEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeColor="@color/grey"
+                app:helperText="Ρόλος">
+
+                <AutoCompleteTextView
+                    android:id="@+id/participantPosition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:inputType="phone"
-                    android:textColor="@color/grey" />
+                    android:inputType="none"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,18 +86,13 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/profileSaveButton"
+        android:id="@+id/saveParticipantButton"
         style="@style/SuccessBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:text="@string/save"
-        android:textAllCaps="false"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="saveProfile"/>
-
-
+        android:textAllCaps="false"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
