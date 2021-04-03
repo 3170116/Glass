@@ -2,8 +2,8 @@ package com.aueb.glass;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
 
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
     }
 
     @Override

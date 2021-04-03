@@ -1,13 +1,13 @@
 package com.aueb.glass.fragments;
 
+import androidx.fragment.app.Fragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import android.app.Fragment;
 
 import com.aueb.glass.MainActivity;
 import com.aueb.glass.R;

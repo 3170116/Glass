@@ -1,0 +1,80 @@
+package com.aueb.glass.adapters;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
+import com.aueb.glass.EventsActivity;
+import com.aueb.glass.MainActivity;
+import com.aueb.glass.R;
+import com.aueb.glass.fragments.EditEventFragment;
+import com.aueb.glass.fragments.EditParticipantFragment;
+import com.aueb.glass.fragments.VotingOptionsFragment;
+import com.aueb.glass.models.Event;
+import com.aueb.glass.models.VotingOption;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+public class SearchEventsListAdapter extends BaseAdapter {
+
+    private Context context;
+    private List<Event> myEvents;
+
+    public SearchEventsListAdapter(Context context, List<Event> events) {
+        this.context = context;
+        this.myEvents = events;
+    }
+
+    @Override
+    public int getCount() {
+        return myEvents.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return myEvents.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        convertView = LayoutInflater.from(context).inflate(R.layout.row_event, parent, false);
+
+        // get current item to be displayed
+        Event myEvent = (Event) getItem(position);
+
+        TextView name = convertView.findViewById(R.id.event_name);
+        name.setText(myEvent.getName());
+
+        TextView description = convertView.findViewById(R.id.event_description);
+        description.setText(myEvent.getDescription());
+
+        Button addTicket = convertView.findViewById(R.id.addTicketButton);
+        addTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditParticipantFragment editParticipantFragment = new EditParticipantFragment(myEvent);
+                editParticipantFragment.show(MainActivity.fragmentManager, "Edit Event");
+            }
+        });
+
+        return convertView;
+    }
+
+}

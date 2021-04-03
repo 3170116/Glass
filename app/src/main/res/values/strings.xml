@@ -2,6 +2,7 @@
     <string name="app_name">Online Events</string>
 
     <string name="save">Αποθήκευση</string>
+    <string name="required">Υποχρεωτικό *</string>
 
     <string-array name="hours">
         <item>0</item>
@@ -45,6 +46,12 @@
         <item>Συμφωνώ</item>
         <item>Διαφωνώ</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="roles">
+        <item>Εργαζόμενος</item>
+        <item>Άνεργος</item>
+        <item>Φοιτητής</item>
+        <item>Μαθητής</item>
+        <item>Συνταξιούχος</item>
+    </string-array>
 </resources>
