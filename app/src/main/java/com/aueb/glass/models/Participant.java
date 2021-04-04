@@ -3,13 +3,20 @@ package com.aueb.glass.models;
 public class Participant {
 
     private String id;
+    private String eventId;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String position;
 
+    private Event event;
+
     public Participant() {}
+
+    public Participant(Event event) {
+        this.event = event;
+    }
 
     public String getId() {
         return id;
@@ -17,6 +24,14 @@ public class Participant {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public String getFirstName() {
@@ -60,4 +75,11 @@ public class Participant {
         this.position = position;
     }
 
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 }

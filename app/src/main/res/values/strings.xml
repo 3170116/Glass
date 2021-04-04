@@ -3,6 +3,7 @@
 
     <string name="save">Αποθήκευση</string>
     <string name="required">Υποχρεωτικό *</string>
+    <string name="required_not_found">Δεν έχετε συμπληρώσει κάποιο υποχρεωτικό πεδίο</string>
 
     <string-array name="hours">
         <item>0</item>

@@ -17,11 +17,11 @@
         <include layout="@layout/partial_event_info" />
 
         <Button
-            android:id="@+id/addTicketButton"
+            android:id="@+id/visitEventButton"
             style="@style/SuccessBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Κλείστε εισιτήριο"
+            android:text="Είσοδος στην εκδήλωση"
             android:textAllCaps="false" />
 
     </LinearLayout>
