@@ -34,6 +34,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     public static int FragmentIndex;
 
     public static FirebaseAuth mAuth;
+    public static FirebaseFirestore firebaseFirestore;
+
     public static GoogleSignInOptions gso;
     public static GoogleSignInClient mGoogleSignInClient;
     public static GoogleSignInAccount account;
@@ -52,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;
+
+    private CollectionReference organizers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
+
+        // Access a Cloud FireStore instance from your Activity
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        organizers = firebaseFirestore.collection("Organizers");
 
         fragmentManager = getSupportFragmentManager();
     }
@@ -165,12 +180,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void saveProfile(View view) {
         editor.putString("FullName", ((com.google.android.material.textfield.TextInputEditText) findViewById(R.id.fullNameText)).getText() + "");
-        editor.putString("Email", ((com.google.android.material.textfield.TextInputEditText) findViewById(R.id.email)).getText() + "");
         editor.putString("Phone", ((com.google.android.material.textfield.TextInputEditText) findViewById(R.id.phone)).getText() + "");
 
         editor.apply();
 
-        Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
+        if (sharedPreferences.getBoolean("IsOrganizer", false)) {
+            organizers
+                    .whereEqualTo("email", MainActivity.account.getEmail())
+                    .limit(1)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    saveOrganizer(document);
+                                    Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Log.e("ORG", "Error getting documents: ", task.getException());
+                                Toast.makeText(getApplicationContext(), "Κάτι πήγε στραβά...", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                    });
+        }
     }
 
 
@@ -189,5 +223,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void saveOrganizer(QueryDocumentSnapshot organizer) {
+        Map<String, Object> data = organizer.getData();
+
+        data.put("fullName", sharedPreferences.getString("FullName", ""));
+        data.put("phone", sharedPreferences.getString("Phone", ""));
+        data.put("companyName", sharedPreferences.getString("CompanyName", ""));
+        data.put("companyDescription", sharedPreferences.getString("CompanyDescription", ""));
+
+        organizers.document(organizer.getId()).set(data);
     }
 }

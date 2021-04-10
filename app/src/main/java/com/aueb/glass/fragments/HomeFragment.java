@@ -41,12 +41,7 @@ public class HomeFragment extends Fragment {
         }
 
         TextInputEditText email = view.findViewById(R.id.email);
-
-        if (MainActivity.sharedPreferences.getString("Email", "").isEmpty()) {
-            email.setText(MainActivity.account.getEmail());
-        } else {
-            email.setText(MainActivity.sharedPreferences.getString("Email", ""));
-        }
+        email.setText(MainActivity.account.getEmail());
 
         TextInputEditText phone = view.findViewById(R.id.phone);
         phone.setText(MainActivity.sharedPreferences.getString("Phone", ""));

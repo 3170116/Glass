@@ -3,8 +3,8 @@ package com.aueb.glass;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,13 +12,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aueb.glass.fragments.LoginFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -29,6 +38,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
+    private CollectionReference organizers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +55,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(MainActivity.account.getId(), Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        organizers = MainActivity.firebaseFirestore.collection("Organizers");
 
         companyInfo = findViewById(R.id.companyInfo);
 
@@ -111,8 +124,71 @@ public class SettingsActivity extends AppCompatActivity {
 
         editor.apply();
 
-        Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
+        if (organizer.isChecked()) {
+            organizers
+                    .whereEqualTo("email", MainActivity.account.getEmail())
+                    .limit(1)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult().size() == 1) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        saveOrganizer(document);
+                                        Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                } else {
+                                    createOrganizer();
+                                }
+                            } else {
+                                Log.e("ORG", "Error getting documents: ", task.getException());
+                                Toast.makeText(getApplicationContext(), "Κάτι πήγε στραβά...", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                    });
 
-        finish();
+        }
+    }
+
+
+    private void saveOrganizer(QueryDocumentSnapshot organizer) {
+        Map<String, Object> data = organizer.getData();
+
+        data.put("fullName", MainActivity.sharedPreferences.getString("FullName", ""));
+        data.put("phone", MainActivity.sharedPreferences.getString("Phone", ""));
+        data.put("companyName", companyName.getText() + "");
+        data.put("companyDescription", companyDescription.getText() + "");
+
+        organizers.document(organizer.getId()).set(data);
+    }
+
+    private void createOrganizer() {
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("email", MainActivity.account.getEmail());
+        data.put("fullName", MainActivity.sharedPreferences.getString("FullName", ""));
+        data.put("phone", MainActivity.sharedPreferences.getString("Phone", ""));
+        data.put("companyName", companyName.getText() + "");
+        data.put("companyDescription", companyDescription.getText() + "");
+
+        organizers
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Κάτι πήγε στραβά...", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
     }
 }

@@ -43,6 +43,8 @@ dependencies {
     // Also declare the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.firebase:firebase-auth:20.0.2'
+    // Declare the dependency for the Cloud FireStore library
+    implementation 'com.google.firebase:firebase-firestore'
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
