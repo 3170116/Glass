@@ -18,20 +18,33 @@ import com.aueb.glass.models.Event;
 import com.aueb.glass.models.VotingOption;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.CollectionReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
 public class MyEventsListAdapter extends BaseAdapter {
 
+    private class EventStartDateComparator implements Comparator<Event> {
+
+        @Override
+        public int compare(Event e1, Event e2) {
+            return e1.getStartDate().compareTo(e2.getStartDate());
+        }
+    }
+
     private Context context;
+    private CollectionReference events;
     private List<Event> myEvents;
 
-    public MyEventsListAdapter(Context context, List<Event> events) {
+    public MyEventsListAdapter(Context context, CollectionReference events, List<Event> myEvents) {
         this.context = context;
-        this.myEvents = events;
+        this.events = events;
+        this.myEvents = myEvents;
     }
 
     @Override
@@ -62,17 +75,16 @@ public class MyEventsListAdapter extends BaseAdapter {
         TextInputEditText startDate = convertView.findViewById(R.id.myEventStartDate);
         startDate.setText(myEvent.getStartDateToDisplay());
 
-        TextInputEditText endDate = convertView.findViewById(R.id.myEventEndDate);
-        endDate.setText(myEvent.getEndDateToDisplay());
-
         TextInputEditText myRemainingTickets = convertView.findViewById(R.id.myEventRemainingTickets);
         myRemainingTickets.setText(myEvent.getRemainingTickets() + "");
 
         MaterialButton edit = convertView.findViewById(R.id.myEventEditButton);
+        MyEventsListAdapter myEventsListAdapter = this;
+
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditEventFragment editEventFragment = new EditEventFragment(myEvent);
+                EditEventFragment editEventFragment = new EditEventFragment(myEventsListAdapter, events, myEvent);
                 editEventFragment.show(EventsActivity.fragmentManager, "Edit Event");
             }
         });
@@ -94,6 +106,15 @@ public class MyEventsListAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    public void addEvent(Event event) {
+        this.myEvents.add(event);
+        resortEvents();
+    }
+
+    public void resortEvents() {
+        Collections.sort(this.myEvents, new EventStartDateComparator());
     }
 
 }

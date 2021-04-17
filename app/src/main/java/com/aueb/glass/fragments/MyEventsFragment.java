@@ -2,25 +2,38 @@ package com.aueb.glass.fragments;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.aueb.glass.EventsActivity;
+import com.aueb.glass.MainActivity;
 import com.aueb.glass.R;
 import com.aueb.glass.adapters.MyEventsListAdapter;
 import com.aueb.glass.models.Event;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class MyEventsFragment extends Fragment {
+
+    private CollectionReference events;
 
     public MyEventsFragment() {
 
@@ -29,7 +42,9 @@ public class MyEventsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getActivity().setTitle("Οι εκδηλώσεις μου");
+        events = MainActivity.firebaseFirestore.collection("Events");
     }
 
     @Override
@@ -41,43 +56,48 @@ public class MyEventsFragment extends Fragment {
 
         List<Event> myEvents = new ArrayList<>();
 
-        //για δοκιμες
-        Event testEvent = new Event();
-
-        testEvent.setId("fdg80d");
-        testEvent.setName("Σεμινάριο πρώτων βοηθειών");
-
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(Calendar.DAY_OF_MONTH, 13);
-        calendar.set(Calendar.MONTH, 4);
-        calendar.set(Calendar.YEAR, 2021);
-        calendar.set(Calendar.HOUR, 15);
-        calendar.set(Calendar.MINUTE, 0);
-
-        testEvent.setStartDate(calendar.getTime());
-
-        calendar.set(Calendar.HOUR, 17);
-        calendar.set(Calendar.MINUTE, 30);
-
-        testEvent.setEndDate(calendar.getTime());
-        testEvent.setRemainingTickets(12);
-
-        testEvent.setPublished(true);
-
-        myEvents.add(testEvent);
-        //
-
-        MyEventsListAdapter myEventsListAdapter = new MyEventsListAdapter(getActivity().getApplicationContext(), myEvents);
-
+        MyEventsListAdapter myEventsListAdapter = new MyEventsListAdapter(getActivity().getApplicationContext(), events, myEvents);
         myEventsList.setAdapter(myEventsListAdapter);
-        myEventsListAdapter.notifyDataSetChanged();
+
+        events
+                .whereEqualTo("organizerId", MainActivity.account.getId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Event currEvent = new Event();
+                                Map<String, Object> data = document.getData();
+
+                                currEvent.setId(document.getId());
+                                currEvent.setOrganizerId(data.get("organizerId").toString());
+                                currEvent.setName(data.get("name").toString());
+                                currEvent.setDescription(data.get("description").toString());
+                                currEvent.setUrl(data.get("url").toString());
+                                currEvent.setStartDate(new Date(Date.parse(data.get("startDate").toString())));
+                                currEvent.setMaxTickets(Integer.parseInt(data.get("maxTickets").toString()));
+                                currEvent.setRemainingTickets(Integer.parseInt(data.get("remainingTickets").toString()));
+                                currEvent.setShowLiveParticipants(Boolean.parseBoolean(data.get("showLiveParticipants").toString()));
+                                currEvent.setPublished(Boolean.parseBoolean(data.get("isPublished").toString()));
+
+                                myEvents.add(currEvent);
+                            }
+
+                            myEventsListAdapter.resortEvents();
+                            myEventsListAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.e("ORG", "Error getting documents: ", task.getException());
+                            Toast.makeText(getActivity().getApplicationContext(), "Κάτι πήγε στραβά...", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
         FloatingActionButton addEvent = view.findViewById(R.id.fabAddEvent);
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditEventFragment editEventFragment = new EditEventFragment(new Event());
+                EditEventFragment editEventFragment = new EditEventFragment(myEventsListAdapter, events, new Event());
                 editEventFragment.show(EventsActivity.fragmentManager, "Create Event");
             }
         });

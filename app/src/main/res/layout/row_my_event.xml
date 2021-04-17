@@ -52,23 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:startIconDrawable="@drawable/ic_events"
-                app:boxStrokeColor="@color/grey"
-                app:helperText="Ημερομηνία λήξης">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/myEventEndDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 app:startIconDrawable="@drawable/ic_ticket"
                 app:boxStrokeColor="@color/grey"
                 app:helperText="Υπολειπόμενα εισιτήρια">

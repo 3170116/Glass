@@ -2,6 +2,7 @@ package com.aueb.glass.models;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,6 @@ public class Event {
     private String description;
     private String url;
     private Date startDate;
-    private Date endDate;
     private int remainingTickets;
 
     private List<Participant> myParticipants;
@@ -73,14 +73,6 @@ public class Event {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public int getRemainingTickets() {
@@ -146,14 +138,18 @@ public class Event {
         }
     }
 
+    public void resetMaxAndRemainingTickets(int maxTickets) {
+        if (this.maxTickets <= maxTickets) {
+            this.remainingTickets += (maxTickets - this.maxTickets);
+        } else {
+            this.remainingTickets -= (this.maxTickets - maxTickets);
+        }
+        this.maxTickets = maxTickets;
+    }
+
     public String getStartDateToDisplay() {
         SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy h:mm a");
         return dateFormat.format(this.startDate.getTime());
-    }
-
-    public String getEndDateToDisplay() {
-        SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy h:mm a");
-        return dateFormat.format(this.endDate.getTime());
     }
 
     public boolean isExpired() {
