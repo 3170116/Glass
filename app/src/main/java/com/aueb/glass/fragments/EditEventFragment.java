@@ -1,6 +1,5 @@
 package com.aueb.glass.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,7 +52,7 @@ public class EditEventFragment extends BottomSheetDialogFragment {
     private TextInputEditText maxTickets;
     private TextInputEditText remainingTickets;
     private SwitchMaterial showLiveParticipants;
-    private  SwitchMaterial isPublished;
+    private SwitchMaterial isPublished;
 
     private Button save;
     private Button delete;
@@ -227,7 +226,26 @@ public class EditEventFragment extends BottomSheetDialogFragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO να καλει το firebase
+                events
+                        .document(myEvent.getId())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getActivity().getApplicationContext(), "Η εκδήλωση διαγράφηκε!", Toast.LENGTH_SHORT).show();
+
+                                myEventsListAdapter.removeEvent(myEvent);
+                                myEventsListAdapter.notifyDataSetChanged();
+
+                                dismiss();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity().getApplicationContext(), "Κάτι πήγε στραβά...", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
 

@@ -3,6 +3,7 @@ package com.aueb.glass.models;
 public class Participant {
 
     private String id;
+    private String accountId;
     private String eventId;
     private String firstName;
     private String lastName;
@@ -24,6 +25,14 @@ public class Participant {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public String getEventId() {

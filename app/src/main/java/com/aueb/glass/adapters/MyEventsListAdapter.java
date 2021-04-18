@@ -113,6 +113,15 @@ public class MyEventsListAdapter extends BaseAdapter {
         resortEvents();
     }
 
+    public void removeEvent(Event event) {
+        for (int i = 0; i < this.myEvents.size(); i++) {
+            if (this.myEvents.get(i).getId() == event.getId()) {
+                this.myEvents.remove(i);
+                break;
+            }
+        }
+    }
+
     public void resortEvents() {
         Collections.sort(this.myEvents, new EventStartDateComparator());
     }
