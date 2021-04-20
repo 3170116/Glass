@@ -21,6 +21,7 @@ import com.aueb.glass.models.Event;
 import com.aueb.glass.models.VotingOption;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.CollectionReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,9 +33,12 @@ public class SearchEventsListAdapter extends BaseAdapter {
     private Context context;
     private List<Event> myEvents;
 
-    public SearchEventsListAdapter(Context context, List<Event> events) {
+    private CollectionReference events;
+
+    public SearchEventsListAdapter(Context context, CollectionReference events, List<Event> myEvents) {
         this.context = context;
-        this.myEvents = events;
+        this.events = events;
+        this.myEvents = myEvents;
     }
 
     @Override
@@ -69,7 +73,7 @@ public class SearchEventsListAdapter extends BaseAdapter {
         addTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditParticipantFragment editParticipantFragment = new EditParticipantFragment(myEvent);
+                EditParticipantFragment editParticipantFragment = new EditParticipantFragment(events, myEvent);
                 editParticipantFragment.show(MainActivity.fragmentManager, "Edit Event");
             }
         });

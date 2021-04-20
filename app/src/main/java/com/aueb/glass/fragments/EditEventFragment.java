@@ -154,17 +154,17 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                 if (myEvent.getId() == null || myEvent.getId().isEmpty()) {
                     myEvent.setOrganizerId(MainActivity.account.getId());
 
-                    Map<String, String> data = new HashMap<>();
+                    Map<String, Object> data = new HashMap<>();
 
                     data.put("organizerId", myEvent.getOrganizerId());
                     data.put("name", myEvent.getName());
                     data.put("description", myEvent.getDescription());
                     data.put("url", myEvent.getUrl());
                     data.put("startDate", myEvent.getStartDate().toString());
-                    data.put("maxTickets", myEvent.getMaxTickets() + "");
-                    data.put("remainingTickets", myEvent.getMaxTickets() + "");
-                    data.put("showLiveParticipants", myEvent.isShowLiveParticipants() + "");
-                    data.put("isPublished", myEvent.isPublished() + "");
+                    data.put("maxTickets", myEvent.getMaxTickets());
+                    data.put("remainingTickets", myEvent.getMaxTickets());
+                    data.put("showLiveParticipants", myEvent.isShowLiveParticipants());
+                    data.put("isPublished", myEvent.isPublished());
 
                     events
                             .add(data)
@@ -187,17 +187,17 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                                 }
                             });
                 } else {
-                    Map<String, String> data = new HashMap<>();
+                    Map<String, Object> data = new HashMap<>();
 
                     data.put("organizerId", myEvent.getOrganizerId());
                     data.put("name", myEvent.getName());
                     data.put("description", myEvent.getDescription());
                     data.put("url", myEvent.getUrl());
                     data.put("startDate", myEvent.getStartDate().toString());
-                    data.put("maxTickets", myEvent.getMaxTickets() + "");
-                    data.put("remainingTickets", myEvent.getMaxTickets() + "");
-                    data.put("showLiveParticipants", myEvent.isShowLiveParticipants() + "");
-                    data.put("isPublished", myEvent.isPublished() + "");
+                    data.put("maxTickets", myEvent.getMaxTickets());
+                    data.put("remainingTickets", myEvent.getMaxTickets());
+                    data.put("showLiveParticipants", myEvent.isShowLiveParticipants());
+                    data.put("isPublished", myEvent.isPublished());
 
                     events
                             .document(myEvent.getId())

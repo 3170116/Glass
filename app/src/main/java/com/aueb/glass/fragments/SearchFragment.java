@@ -47,9 +47,11 @@ public class SearchFragment extends Fragment {
         ListView eventsList = view.findViewById(R.id.searchEventsList);
 
         List<Event> searchEvents = new ArrayList<>();
-        SearchEventsListAdapter searchEventsListAdapter = new SearchEventsListAdapter(getActivity().getApplicationContext(), searchEvents);
+        SearchEventsListAdapter searchEventsListAdapter = new SearchEventsListAdapter(getActivity().getApplicationContext(), events, searchEvents);
 
         events
+                .whereEqualTo("isPublished", true)
+                .whereGreaterThan("remainingTickets", 0)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
