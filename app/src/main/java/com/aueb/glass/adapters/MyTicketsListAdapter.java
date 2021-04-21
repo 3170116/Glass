@@ -61,18 +61,28 @@ public class MyTicketsListAdapter extends BaseAdapter {
         Participant myTicket = (Participant) getItem(position);
 
         TextView name = convertView.findViewById(R.id.event_name);
-        name.setText(myTicket.getEvent().getName());
 
-        TextView description = convertView.findViewById(R.id.event_description);
-        description.setText(myTicket.getEvent().getDescription());
+        if (myTicket.getEvent() != null) {
+            name.setText(myTicket.getEvent().getName());
+
+            TextView description = convertView.findViewById(R.id.event_description);
+            description.setText(myTicket.getEvent().getDescription());
+        } else {
+            name.setText("Η εκδήλωση έχει διαγραφεί.");
+        }
 
         Button visitBtn = convertView.findViewById(R.id.visitEventButton);
-        visitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
+        if (myTicket.getEvent() != null) {
+            visitBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        } else {
+            visitBtn.setVisibility(View.GONE);
+        }
 
         return convertView;
     }
