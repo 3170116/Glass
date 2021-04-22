@@ -45,6 +45,7 @@ public class EditEventFragment extends BottomSheetDialogFragment {
 
     private TextInputEditText name;
     private TextInputEditText description;
+    private AutoCompleteTextView category;
     private TextInputEditText url;
     private CalendarView date;
     private AutoCompleteTextView startHourText;
@@ -69,12 +70,13 @@ public class EditEventFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_event, container, false);
 
+        ArrayAdapter<CharSequence> categoriesAdapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.categories, R.layout.adapter_dropdown_text);
         ArrayAdapter<CharSequence> hoursAdapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.hours, R.layout.adapter_dropdown_text);
         ArrayAdapter<CharSequence> minutesAdapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.minutes, R.layout.adapter_dropdown_text);
 
         name = view.findViewById(R.id.eventName);
         description = view.findViewById(R.id.eventDescription);
-
+        category = view.findViewById(R.id.eventCategory);
         url = view.findViewById(R.id.eventUrl);
 
         long now = new Date().getTime();
@@ -91,7 +93,6 @@ public class EditEventFragment extends BottomSheetDialogFragment {
         });
 
         startHourText = view.findViewById(R.id.eventStartHour);
-        startHourText.setAdapter(hoursAdapter);
         startHourText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -100,7 +101,6 @@ public class EditEventFragment extends BottomSheetDialogFragment {
         });
 
         startMinuteText = view.findViewById(R.id.eventStartMinute);
-        startMinuteText.setAdapter(minutesAdapter);
         startMinuteText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -118,12 +118,16 @@ public class EditEventFragment extends BottomSheetDialogFragment {
         delete = view.findViewById(R.id.deleteEventButton);
 
         if (myEvent.getId() != null && !myEvent.getId().isEmpty()) {
-
             name.setText(myEvent.getName());
             description.setText(myEvent.getDescription());
-
+            category.setText(myEvent.getCategory());
             url.setText(myEvent.getUrl());
+
             date.setDate(myEvent.getStartDate().getTime());
+            startHourText.setText(myEvent.getStartDate().getHours() + "");
+            startMinuteText.setText(myEvent.getStartDate().getMinutes() + "");
+            startHour = myEvent.getStartDate().getHours();
+            startMinute = myEvent.getStartDate().getMinutes();
 
             maxTickets.setText(myEvent.getMaxTickets() + "");
             remainingTickets.setText(myEvent.getRemainingTickets() + "");
@@ -134,14 +138,19 @@ public class EditEventFragment extends BottomSheetDialogFragment {
             delete.setVisibility(View.VISIBLE);
         }
 
+        category.setAdapter(categoriesAdapter);
+        startMinuteText.setAdapter(minutesAdapter);
+        startHourText.setAdapter(hoursAdapter);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 myEvent.setName(name.getText() + "");
                 myEvent.setDescription(description.getText() + "");
+                myEvent.setCategory(category.getText() + "");
                 myEvent.setUrl(url.getText() + "");
 
-                calendar.set(Calendar.HOUR, startHour);
+                calendar.set(Calendar.HOUR_OF_DAY, startHour);
                 calendar.set(Calendar.MINUTE, startMinute);
 
                 myEvent.setStartDate(calendar.getTime());
@@ -159,6 +168,7 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                     data.put("organizerId", myEvent.getOrganizerId());
                     data.put("name", myEvent.getName());
                     data.put("description", myEvent.getDescription());
+                    data.put("category", myEvent.getCategory());
                     data.put("url", myEvent.getUrl());
                     data.put("startDate", myEvent.getStartDate().toString());
                     data.put("maxTickets", myEvent.getMaxTickets());
@@ -192,6 +202,7 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                     data.put("organizerId", myEvent.getOrganizerId());
                     data.put("name", myEvent.getName());
                     data.put("description", myEvent.getDescription());
+                    data.put("category", myEvent.getCategory());
                     data.put("url", myEvent.getUrl());
                     data.put("startDate", myEvent.getStartDate().toString());
                     data.put("maxTickets", myEvent.getMaxTickets());

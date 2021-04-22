@@ -55,4 +55,13 @@
         <item>Μαθητής</item>
         <item>Συνταξιούχος</item>
     </string-array>
+
+    <string-array name="categories">
+        <item>Τεχνολογία</item>
+        <item>Τέχνη</item>
+        <item>Εκπαίδευση</item>
+        <item>Μουσική</item>
+        <item>Σεμινάριο</item>
+        <item>Άλλο</item>
+    </string-array>
 </resources>

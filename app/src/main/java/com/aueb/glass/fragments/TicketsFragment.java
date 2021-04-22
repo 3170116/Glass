@@ -88,6 +88,7 @@ public class TicketsFragment extends Fragment {
                                                 currEvent.setOrganizerId(data.get("organizerId").toString());
                                                 currEvent.setName(data.get("name").toString());
                                                 currEvent.setDescription(data.get("description").toString());
+                                                currEvent.setCategory(data.get("category").toString());
                                                 currEvent.setUrl(data.get("url").toString());
                                                 currEvent.setStartDate(new Date(Date.parse(data.get("startDate").toString())));
                                                 currEvent.setMaxTickets(Integer.parseInt(data.get("maxTickets").toString()));

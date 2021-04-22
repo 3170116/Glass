@@ -13,12 +13,10 @@ public class Event {
     private String organizerId;
     private String name;
     private String description;
+    private String category;
     private String url;
     private Date startDate;
     private int remainingTickets;
-
-    private List<Participant> myParticipants;
-    private List<VotingOption> myOptions;
 
     //ρυθμισεις
     private int maxTickets;
@@ -57,6 +55,14 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getUrl() {
@@ -115,29 +121,6 @@ public class Event {
         this.remainingTickets -= 1;
     }
 
-    public void addNewParticipant(Participant participant) {
-        if (this.myParticipants == null) {
-            this.myParticipants = new ArrayList<>();
-        }
-        this.myParticipants.add(participant);
-    }
-
-    public void addNewOption(VotingOption option) {
-        if (this.myOptions == null) {
-            this.myOptions = new ArrayList<>();
-        }
-        this.myOptions.add(option);
-    }
-
-    public void removeOption(VotingOption option) {
-        for (int i = 0; i < this.myOptions.size(); i++) {
-            if (this.myOptions.get(i).getTypeId() == option.getTypeId()) {
-                this.myOptions.remove(this.myOptions.get(i));
-                break;
-            }
-        }
-    }
-
     public void resetMaxAndRemainingTickets(int maxTickets) {
         if (this.maxTickets <= maxTickets) {
             this.remainingTickets += (maxTickets - this.maxTickets);
@@ -152,8 +135,5 @@ public class Event {
         return dateFormat.format(this.startDate.getTime());
     }
 
-    public boolean isExpired() {
-        return this.startDate.after(new Date());
-    }
-
+    public boolean hasStarted() { return this.startDate.after(new Date()); }
 }
