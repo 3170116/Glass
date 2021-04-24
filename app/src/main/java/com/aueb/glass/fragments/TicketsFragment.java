@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -84,22 +85,27 @@ public class TicketsFragment extends Fragment {
                                                 Event currEvent = new Event();
                                                 Map<String, Object> data = task.getResult().getData();
 
-                                                currEvent.setId(currParticipant.getEventId());
-                                                currEvent.setOrganizerId(data.get("organizerId").toString());
-                                                currEvent.setName(data.get("name").toString());
-                                                currEvent.setDescription(data.get("description").toString());
-                                                currEvent.setCategory(data.get("category").toString());
-                                                currEvent.setUrl(data.get("url").toString());
-                                                currEvent.setStartDate(new Date(Date.parse(data.get("startDate").toString())));
-                                                currEvent.setMaxTickets(Integer.parseInt(data.get("maxTickets").toString()));
-                                                currEvent.setRemainingTickets(Integer.parseInt(data.get("remainingTickets").toString()));
-                                                currEvent.setShowLiveParticipants(Boolean.parseBoolean(data.get("showLiveParticipants").toString()));
-                                                currEvent.setPublished(Boolean.parseBoolean(data.get("isPublished").toString()));
+                                                if (data != null) {
+                                                    currEvent.setId(currParticipant.getEventId());
+                                                    currEvent.setOrganizerId(data.get("organizerId").toString());
+                                                    currEvent.setName(data.get("name").toString());
+                                                    currEvent.setDescription(data.get("description").toString());
+                                                    currEvent.setCategory(data.get("category").toString());
+                                                    currEvent.setUrl(data.get("url").toString());
 
-                                                currParticipant.setEvent(currEvent);
-                                                myTickets.add(currParticipant);
+                                                    Timestamp timestamp = (Timestamp) data.get("startDate");
+                                                    currEvent.setStartDate(timestamp.toDate());
 
-                                                myTicketsListAdapter.notifyDataSetChanged();
+                                                    currEvent.setMaxTickets(Integer.parseInt(data.get("maxTickets").toString()));
+                                                    currEvent.setRemainingTickets(Integer.parseInt(data.get("remainingTickets").toString()));
+                                                    currEvent.setShowLiveParticipants(Boolean.parseBoolean(data.get("showLiveParticipants").toString()));
+                                                    currEvent.setPublished(Boolean.parseBoolean(data.get("isPublished").toString()));
+
+                                                    currParticipant.setEvent(currEvent);
+                                                    myTickets.add(currParticipant);
+
+                                                    myTicketsListAdapter.notifyDataSetChanged();
+                                                }
                                             }
                                         }
                                     });

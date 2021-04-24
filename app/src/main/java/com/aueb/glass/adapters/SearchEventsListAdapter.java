@@ -81,4 +81,13 @@ public class SearchEventsListAdapter extends BaseAdapter {
         return convertView;
     }
 
+
+    public void addEvent(Event event) {
+        this.myEvents.add(event);
+    }
+
+    public void clear() {
+        this.myEvents.clear();
+    }
+
 }

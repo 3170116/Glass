@@ -170,7 +170,7 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                     data.put("description", myEvent.getDescription());
                     data.put("category", myEvent.getCategory());
                     data.put("url", myEvent.getUrl());
-                    data.put("startDate", myEvent.getStartDate().toString());
+                    data.put("startDate", myEvent.getStartDate());
                     data.put("maxTickets", myEvent.getMaxTickets());
                     data.put("remainingTickets", myEvent.getMaxTickets());
                     data.put("showLiveParticipants", myEvent.isShowLiveParticipants());
@@ -204,7 +204,7 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                     data.put("description", myEvent.getDescription());
                     data.put("category", myEvent.getCategory());
                     data.put("url", myEvent.getUrl());
-                    data.put("startDate", myEvent.getStartDate().toString());
+                    data.put("startDate", myEvent.getStartDate());
                     data.put("maxTickets", myEvent.getMaxTickets());
                     data.put("remainingTickets", myEvent.getMaxTickets());
                     data.put("showLiveParticipants", myEvent.isShowLiveParticipants());
