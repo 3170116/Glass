@@ -51,8 +51,6 @@ public class EditEventFragment extends BottomSheetDialogFragment {
     private AutoCompleteTextView startHourText;
     private AutoCompleteTextView startMinuteText;
     private TextInputEditText maxTickets;
-    private TextInputEditText remainingTickets;
-    private SwitchMaterial showLiveParticipants;
     private SwitchMaterial isPublished;
 
     private Button save;
@@ -83,7 +81,6 @@ public class EditEventFragment extends BottomSheetDialogFragment {
 
         date = view.findViewById(R.id.eventDate);
         date.setMinDate(now);
-        calendar.setTime(new Date(now));
 
         date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -109,9 +106,6 @@ public class EditEventFragment extends BottomSheetDialogFragment {
         });
 
         maxTickets = view.findViewById(R.id.eventMaxTickets);
-        remainingTickets = view.findViewById(R.id.eventRemainingTickets);
-
-        showLiveParticipants = view.findViewById(R.id.eventShowLiveParticipants);
         isPublished = view.findViewById(R.id.eventIsPublished);
 
         save = view.findViewById(R.id.editEventButton);
@@ -124,18 +118,18 @@ public class EditEventFragment extends BottomSheetDialogFragment {
             url.setText(myEvent.getUrl());
 
             date.setDate(myEvent.getStartDate().getTime());
+            calendar.setTime(myEvent.getStartDate());
             startHourText.setText(myEvent.getStartDate().getHours() + "");
             startMinuteText.setText(myEvent.getStartDate().getMinutes() + "");
             startHour = myEvent.getStartDate().getHours();
             startMinute = myEvent.getStartDate().getMinutes();
 
             maxTickets.setText(myEvent.getMaxTickets() + "");
-            remainingTickets.setText(myEvent.getRemainingTickets() + "");
-
-            showLiveParticipants.setChecked(myEvent.isShowLiveParticipants());
             isPublished.setChecked(myEvent.isPublished());
 
             delete.setVisibility(View.VISIBLE);
+        } else {
+            calendar.setTime(new Date(now));
         }
 
         category.setAdapter(categoriesAdapter);
@@ -156,8 +150,6 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                 myEvent.setStartDate(calendar.getTime());
 
                 myEvent.resetMaxAndRemainingTickets(Integer.parseInt(maxTickets.getText() == null || maxTickets.getText().toString().isEmpty() ? "0" :maxTickets.getText().toString()));
-
-                myEvent.setShowLiveParticipants(showLiveParticipants.isChecked());
                 myEvent.setPublished(isPublished.isChecked());
 
                 if (myEvent.getId() == null || myEvent.getId().isEmpty()) {
@@ -173,7 +165,6 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                     data.put("startDate", myEvent.getStartDate());
                     data.put("maxTickets", myEvent.getMaxTickets());
                     data.put("remainingTickets", myEvent.getMaxTickets());
-                    data.put("showLiveParticipants", myEvent.isShowLiveParticipants());
                     data.put("isPublished", myEvent.isPublished());
 
                     events
@@ -207,7 +198,6 @@ public class EditEventFragment extends BottomSheetDialogFragment {
                     data.put("startDate", myEvent.getStartDate());
                     data.put("maxTickets", myEvent.getMaxTickets());
                     data.put("remainingTickets", myEvent.getMaxTickets());
-                    data.put("showLiveParticipants", myEvent.isShowLiveParticipants());
                     data.put("isPublished", myEvent.isPublished());
 
                     events

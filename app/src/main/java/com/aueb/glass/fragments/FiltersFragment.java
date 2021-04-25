@@ -104,7 +104,6 @@ public class FiltersFragment extends BottomSheetDialogFragment {
 
                                             currEvent.setMaxTickets(Integer.parseInt(data.get("maxTickets").toString()));
                                             currEvent.setRemainingTickets(Integer.parseInt(data.get("remainingTickets").toString()));
-                                            currEvent.setShowLiveParticipants(Boolean.parseBoolean(data.get("showLiveParticipants").toString()));
                                             currEvent.setPublished(Boolean.parseBoolean(data.get("isPublished").toString()));
 
                                             searchEventsListAdapter.addEvent(currEvent);

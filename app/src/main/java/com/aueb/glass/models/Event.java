@@ -20,7 +20,6 @@ public class Event {
 
     //ρυθμισεις
     private int maxTickets;
-    private boolean showLiveParticipants;
     private boolean isPublished;
 
     public Event() { }
@@ -97,14 +96,6 @@ public class Event {
         this.maxTickets = maxTickets;
     }
 
-    public boolean isShowLiveParticipants() {
-        return showLiveParticipants;
-    }
-
-    public void setShowLiveParticipants(boolean showLiveParticipants) {
-        this.showLiveParticipants = showLiveParticipants;
-    }
-
     public boolean isPublished() {
         return isPublished;
     }
@@ -113,13 +104,6 @@ public class Event {
         isPublished = published;
     }
 
-    public void increaseRemainingTickets() {
-        this.remainingTickets += 1;
-    }
-
-    public void decreaseRemainingTickets() {
-        this.remainingTickets -= 1;
-    }
 
     public void resetMaxAndRemainingTickets(int maxTickets) {
         if (this.maxTickets <= maxTickets) {

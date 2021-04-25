@@ -67,6 +67,9 @@ public class MyTicketsListAdapter extends BaseAdapter {
 
             TextView description = convertView.findViewById(R.id.event_description);
             description.setText(myTicket.getEvent().getDescription());
+
+            TextView startDate = convertView.findViewById(R.id.event_start_date);
+            startDate.setText(myTicket.getEvent().getStartDateToDisplay());
         } else {
             name.setText("Η εκδήλωση έχει διαγραφεί.");
         }

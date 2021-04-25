@@ -69,6 +69,9 @@ public class SearchEventsListAdapter extends BaseAdapter {
         TextView description = convertView.findViewById(R.id.event_description);
         description.setText(myEvent.getDescription());
 
+        TextView startDate = convertView.findViewById(R.id.event_start_date);
+        startDate.setText(myEvent.getStartDateToDisplay());
+
         Button addTicket = convertView.findViewById(R.id.addTicketButton);
         addTicket.setOnClickListener(new View.OnClickListener() {
             @Override

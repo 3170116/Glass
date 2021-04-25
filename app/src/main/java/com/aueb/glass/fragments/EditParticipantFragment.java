@@ -114,7 +114,6 @@ public class EditParticipantFragment extends BottomSheetDialogFragment {
                                 data.put("startDate", myEvent.getStartDate().toString());
                                 data.put("maxTickets", myEvent.getMaxTickets());
                                 data.put("remainingTickets", myEvent.getMaxTickets() - 1);
-                                data.put("showLiveParticipants", myEvent.isShowLiveParticipants());
                                 data.put("isPublished", myEvent.isPublished());
 
                                 events
