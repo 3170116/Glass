@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import com.aueb.glass.EventsActivity;
 import com.aueb.glass.R;
 import com.aueb.glass.fragments.EditEventFragment;
@@ -20,12 +17,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 public class MyEventsListAdapter extends BaseAdapter {
 
@@ -86,22 +81,6 @@ public class MyEventsListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 EditEventFragment editEventFragment = new EditEventFragment(myEventsListAdapter, events, myEvent);
                 editEventFragment.show(EventsActivity.fragmentManager, "Edit Event");
-            }
-        });
-
-        MaterialButton options = convertView.findViewById(R.id.myEventOptionsButton);
-        options.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<VotingOption> myOptions = new ArrayList<>();
-                String[] allOptions = context.getResources().getStringArray(R.array.availableOptions);
-
-                for (int i = 0; i < allOptions.length; i++) {
-                    myOptions.add(new VotingOption(allOptions[i], i + 1, false));
-                }
-
-                VotingOptionsFragment votingOptionsFragment = new VotingOptionsFragment(myOptions);
-                votingOptionsFragment.show(EventsActivity.fragmentManager, "Edit Options");
             }
         });
 

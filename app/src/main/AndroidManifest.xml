@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/live_stream"
         android:supportsRtl="true"
         android:theme="@style/Theme.Glass">
-        <activity android:name=".EventsActivity"></activity>
+        <activity android:name=".OnlineEventActivity"></activity>
+        <activity android:name=".EventsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

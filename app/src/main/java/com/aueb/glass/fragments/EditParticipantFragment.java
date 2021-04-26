@@ -110,10 +110,11 @@ public class EditParticipantFragment extends BottomSheetDialogFragment {
                                 data.put("organizerId", myEvent.getOrganizerId());
                                 data.put("name", myEvent.getName());
                                 data.put("description", myEvent.getDescription());
+                                data.put("category", myEvent.getCategory());
                                 data.put("url", myEvent.getUrl());
-                                data.put("startDate", myEvent.getStartDate().toString());
+                                data.put("startDate", myEvent.getStartDate());
                                 data.put("maxTickets", myEvent.getMaxTickets());
-                                data.put("remainingTickets", myEvent.getMaxTickets() - 1);
+                                data.put("remainingTickets", myEvent.getMaxTickets());
                                 data.put("isPublished", myEvent.isPublished());
 
                                 events

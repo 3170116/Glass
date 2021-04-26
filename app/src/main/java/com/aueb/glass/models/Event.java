@@ -1,12 +1,16 @@
 package com.aueb.glass.models;
 
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class Event {
+public class Event implements Parcelable {
 
     //βασικες πληροφοριες
     private String id;
@@ -22,7 +26,34 @@ public class Event {
     private int maxTickets;
     private boolean isPublished;
 
+    //βοηθητικές
+    private long startDateTime;
+
     public Event() { }
+
+    protected Event(Parcel in) {
+        id = in.readString();
+        organizerId = in.readString();
+        name = in.readString();
+        description = in.readString();
+        category = in.readString();
+        url = in.readString();
+        remainingTickets = in.readInt();
+        maxTickets = in.readInt();
+        isPublished = in.readByte() != 0;
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -114,10 +145,35 @@ public class Event {
         this.maxTickets = maxTickets;
     }
 
+    public void initStartDate() {
+        this.startDate = new Date(this.startDateTime);
+    }
+
     public String getStartDateToDisplay() {
         SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy h:mm a");
         return dateFormat.format(this.startDate.getTime());
     }
 
     public boolean hasStarted() { return this.startDate.after(new Date()); }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(this.id);
+        parcel.writeString(this.organizerId);
+        parcel.writeString(this.name);
+        parcel.writeString(this.description);
+        parcel.writeString(this.category);
+        parcel.writeString(this.url);
+
+        this.startDateTime = this.startDate.getTime();
+        parcel.writeLong(this.startDateTime);
+
+        parcel.writeInt(this.remainingTickets);
+        parcel.writeInt(this.maxTickets);
+    }
 }

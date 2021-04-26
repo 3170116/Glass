@@ -1,6 +1,8 @@
 package com.aueb.glass.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.aueb.glass.EventsActivity;
 import com.aueb.glass.MainActivity;
+import com.aueb.glass.OnlineEventActivity;
 import com.aueb.glass.R;
 import com.aueb.glass.fragments.EditEventFragment;
 import com.aueb.glass.fragments.EditParticipantFragment;
@@ -80,7 +83,9 @@ public class MyTicketsListAdapter extends BaseAdapter {
             visitBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(context, OnlineEventActivity.class);
+                    intent.putExtra("event", myTicket.getEvent());
+                    context.startActivity(intent);
                 }
             });
         } else {
