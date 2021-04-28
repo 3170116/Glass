@@ -1,6 +1,9 @@
 package com.aueb.glass.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +17,21 @@ import com.aueb.glass.MainActivity;
 import com.aueb.glass.R;
 import com.aueb.glass.models.Event;
 import com.aueb.glass.models.VotingOption;
+import com.google.firebase.firestore.CollectionReference;
 
 import java.util.List;
+import java.util.Timer;
 
 public class VotesListAdapter extends BaseAdapter {
 
     private Context context;
     private Event myEvent;
     private List<VotingOption> myOptions;
+    private CollectionReference votingOptions;
 
-    public VotesListAdapter(Context context, Event myEvent, List<VotingOption> myOptions) {
+    public VotesListAdapter(Context context, CollectionReference votingOptions, Event myEvent, List<VotingOption> myOptions) {
         this.context = context;
+        this.votingOptions = votingOptions;
         this.myEvent = myEvent;
         this.myOptions = myOptions;
     }
@@ -63,17 +70,27 @@ public class VotesListAdapter extends BaseAdapter {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     option.setSelected(b);
 
-                    myOptions.clear();
-                    notifyDataSetChanged();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            myOptions.clear();
+                            notifyDataSetChanged();
 
-                    ////TODO να στελνει ειδοποιηση
+                            ////TODO να στελνει ειδοποιηση
+                        }
+                    }, 700);
                 }
             });
         } else {
             optionRadio.setEnabled(false);
         }
 
-        votesText.setText("Ψήφοι: 0");
+        if (!myEvent.getOrganizerId().equals(MainActivity.account.getId())) {
+            votesText.setVisibility(View.GONE);
+        } else {
+            votesText.setText("Ψήφοι: 0");
+        }
 
         return convertView;
     }
@@ -88,4 +105,20 @@ public class VotesListAdapter extends BaseAdapter {
         }
     }
 
+    public void addOption(VotingOption option) {
+        this.myOptions.add(option);
+    }
+
+    public Event getMyEvent() {
+        return myEvent;
+    }
+
+    public boolean isOptionSelected(int typeId) {
+        for (VotingOption option: myOptions) {
+            if (option.getTypeId() == typeId && option.isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -22,14 +22,18 @@ import com.aueb.glass.adapters.VotesListAdapter;
 import com.aueb.glass.fragments.VotingOptionsFragment;
 import com.aueb.glass.models.Event;
 import com.aueb.glass.models.VotingOption;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OnlineEventActivity extends AppCompatActivity {
 
@@ -42,6 +46,7 @@ public class OnlineEventActivity extends AppCompatActivity {
 
     private Event myEvent;
     private List<VotingOption> myOptions;
+    private CollectionReference votingOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +57,12 @@ public class OnlineEventActivity extends AppCompatActivity {
         onlineEventFrameLayout = findViewById(R.id.onlineEventFrameLayout);
 
         myOptions = new ArrayList<>();
+        this.votingOptions = MainActivity.firebaseFirestore.collection("VotingOptions");
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
         Intent intent = getIntent();
         myEvent = intent.getParcelableExtra("event");
@@ -79,27 +85,59 @@ public class OnlineEventActivity extends AppCompatActivity {
         }
 
 
-        VotesListAdapter votesListAdapter = new VotesListAdapter(getApplicationContext(), myEvent, new ArrayList<>());
-
+        VotesListAdapter votesListAdapter = new VotesListAdapter(getApplicationContext(), votingOptions, myEvent, new ArrayList<>());
         votesList.setAdapter(votesListAdapter);
-        votesListAdapter.notifyDataSetChanged();
+
+        votingOptions
+                .whereEqualTo("eventId", myEvent.getId())
+                .orderBy("typeId")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot doc: task.getResult()) {
+                                Map<String, Object> data = doc.getData();
+                                VotingOption option = new VotingOption();
+
+                                option.setId(doc.getId());
+                                option.setEventId(data.get("eventId").toString());
+                                option.setTypeId(Integer.parseInt(data.get("typeId").toString()));
+                                option.setText(data.get("text").toString());
+                                option.setVotes(Integer.parseInt(data.get("votes").toString()));
+                                option.setSelected(true);
+
+                                votesListAdapter.addOption(option);
+                            }
+
+                            votesListAdapter.notifyDataSetChanged();
+
+                            String[] allOptions = getResources().getStringArray(R.array.availableOptions);
+
+                            for (int i = 0; i < allOptions.length; i++) {
+                                VotingOption option = new VotingOption(allOptions[i], i + 1, false);
+
+                                option.setEventId(myEvent.getId());
+                                option.setVotes(0);
+
+                                if (votesListAdapter.isOptionSelected(i + 1)) {
+                                    option.setSelected(true);
+                                }
+
+                                myOptions.add(option);
+                            }
+                        }
+                    }
+                });
 
 
-        String[] allOptions = getResources().getStringArray(R.array.availableOptions);
-
-        for (int i = 0; i < allOptions.length; i++) {
-            VotingOption option = new VotingOption(allOptions[i], i + 1, false);
-            option.setEventId(myEvent.getId());
-
-            myOptions.add(option);
-        }
 
         if (myEvent.getOrganizerId().equals(MainActivity.account.getId())) {
             optionsButton.setVisibility(View.VISIBLE);
             optionsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    VotingOptionsFragment votingOptionsFragment = new VotingOptionsFragment(votesListAdapter, myOptions);
+                    VotingOptionsFragment votingOptionsFragment = new VotingOptionsFragment(votingOptions, votesListAdapter, myOptions);
                     votingOptionsFragment.show(fragmentManager, "Edit Options");
                 }
             });
