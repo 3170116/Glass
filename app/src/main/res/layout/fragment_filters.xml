@@ -54,5 +54,18 @@
             app:layout_constraintStart_toStartOf="parent"
             android:onClick="saveSettings"/>
 
+        <Button
+            android:id="@+id/clearButton"
+            style="@style/SecondaryBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Καθαρισμός"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="saveSettings"/>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

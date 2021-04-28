@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.aueb.glass.R;
 import com.aueb.glass.adapters.OptionsListAdapter;
+import com.aueb.glass.adapters.VotesListAdapter;
 import com.aueb.glass.models.VotingOption;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -19,12 +20,14 @@ import java.util.List;
 
 public class VotingOptionsFragment extends BottomSheetDialogFragment {
 
+    private VotesListAdapter myVotesListAdapter;
     private List<VotingOption> myOptions;
 
     private ListView optionsList;
     private Button saveButton;
 
-    public VotingOptionsFragment(List<VotingOption> optionsList) {
+    public VotingOptionsFragment(VotesListAdapter votesListAdapter, List<VotingOption> optionsList) {
+        this.myVotesListAdapter = votesListAdapter;
         this.myOptions = optionsList;
     }
 
@@ -43,7 +46,11 @@ public class VotingOptionsFragment extends BottomSheetDialogFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myVotesListAdapter.setOptions(myOptions);
+                myVotesListAdapter.notifyDataSetChanged();
 
+                ////TODO να στελνει ειδοποιηση
+                dismiss();
             }
         });
 

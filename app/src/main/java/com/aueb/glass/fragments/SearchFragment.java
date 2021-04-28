@@ -54,7 +54,6 @@ public class SearchFragment extends Fragment {
         List<Event> searchEvents = new ArrayList<>();
         searchEventsListAdapter = new SearchEventsListAdapter(getActivity().getApplicationContext(), events, searchEvents);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         events
                 .whereEqualTo("isPublished", true)
                 .whereGreaterThan("remainingTickets", 0)

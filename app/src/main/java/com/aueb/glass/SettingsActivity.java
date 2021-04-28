@@ -150,6 +150,8 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                     });
 
+        } else {
+            finish();
         }
     }
 

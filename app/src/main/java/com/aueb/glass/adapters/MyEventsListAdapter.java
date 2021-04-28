@@ -1,6 +1,7 @@
 package com.aueb.glass.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.aueb.glass.EventsActivity;
+import com.aueb.glass.OnlineEventActivity;
 import com.aueb.glass.R;
 import com.aueb.glass.fragments.EditEventFragment;
 import com.aueb.glass.fragments.VotingOptionsFragment;
@@ -81,6 +83,19 @@ public class MyEventsListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 EditEventFragment editEventFragment = new EditEventFragment(myEventsListAdapter, events, myEvent);
                 editEventFragment.show(EventsActivity.fragmentManager, "Edit Event");
+            }
+        });
+
+        MaterialButton visit = convertView.findViewById(R.id.myEventVisitButton);
+        visit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, OnlineEventActivity.class);
+
+                intent.putExtra("event", myEvent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                context.startActivity(intent);
             }
         });
 

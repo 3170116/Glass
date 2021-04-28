@@ -9,7 +9,6 @@ public class VotingOption {
     public static final int AGREE_OPTION = 5;
     public static final int DISAGREE_OPTION = 6;
 
-    private String id;
     private String eventId;
     private String text;
     private int typeId;
@@ -21,14 +20,6 @@ public class VotingOption {
         this.text = text;
         this.typeId = typeId;
         this.selected = selected;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEventId() {

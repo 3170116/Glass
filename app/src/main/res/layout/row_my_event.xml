@@ -81,6 +81,15 @@
                     app:icon="@drawable/ic_edit"
                     app:iconGravity="textStart"/>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/myEventVisitButton"
+                    style="@style/SuccessBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Είσοδος"
+                    android:textAllCaps="false" />
+
             </LinearLayout>
 
         </LinearLayout>

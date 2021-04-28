@@ -35,6 +35,7 @@ public class FiltersFragment extends BottomSheetDialogFragment {
     private CalendarView fromDate;
     private AutoCompleteTextView eventCategoryText;
     private Button searchButton;
+    private Button clearButton;
 
     private SearchEventsListAdapter searchEventsListAdapter;
     private CollectionReference events;
@@ -57,6 +58,7 @@ public class FiltersFragment extends BottomSheetDialogFragment {
         fromDate = view.findViewById(R.id.fromDate);
         eventCategoryText = view.findViewById(R.id.eventCategoryText);
         searchButton = view.findViewById(R.id.searchButton);
+        clearButton = view.findViewById(R.id.clearButton);
 
         long now = new Date().getTime();
         fromDate.setMinDate(now);
@@ -111,8 +113,52 @@ public class FiltersFragment extends BottomSheetDialogFragment {
                                     }
 
                                     searchEventsListAdapter.notifyDataSetChanged();
+                                    dismiss();
                                 } else {
-                                    Log.e("ORG", "Error getting documents: ", task.getException());
+                                    Toast.makeText(getActivity().getApplicationContext(), "Κάτι πήγε στραβά...", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchEventsListAdapter.clear();
+
+                events
+                        .whereEqualTo("isPublished", true)
+                        .whereGreaterThan("remainingTickets", 0)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Event currEvent = new Event();
+                                        Map<String, Object> data = document.getData();
+
+                                        currEvent.setId(document.getId());
+                                        currEvent.setOrganizerId(data.get("organizerId").toString());
+                                        currEvent.setName(data.get("name").toString());
+                                        currEvent.setDescription(data.get("description").toString());
+                                        currEvent.setCategory(data.get("category").toString());
+                                        currEvent.setUrl(data.get("url").toString());
+
+                                        Timestamp timestamp = (Timestamp) data.get("startDate");
+                                        currEvent.setStartDate(timestamp.toDate());
+
+                                        currEvent.setMaxTickets(Integer.parseInt(data.get("maxTickets").toString()));
+                                        currEvent.setRemainingTickets(Integer.parseInt(data.get("remainingTickets").toString()));
+                                        currEvent.setPublished(Boolean.parseBoolean(data.get("isPublished").toString()));
+
+                                        searchEventsListAdapter.addEvent(currEvent);
+                                    }
+
+                                    searchEventsListAdapter.notifyDataSetChanged();
+                                    dismiss();
+                                } else {
                                     Toast.makeText(getActivity().getApplicationContext(), "Κάτι πήγε στραβά...", Toast.LENGTH_SHORT).show();
                                 }
                             }

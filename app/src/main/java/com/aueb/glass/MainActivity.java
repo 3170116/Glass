@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
         editor.apply();
 
-        if (sharedPreferences.getBoolean("IsOrganizer", false)) {
+        if (sharedPreferences.getBoolean("IsOrganizer", true)) {
             organizers
                     .whereEqualTo("email", MainActivity.account.getEmail())
                     .limit(1)
@@ -198,12 +198,12 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Log.e("ORG", "Error getting documents: ", task.getException());
                                 Toast.makeText(getApplicationContext(), "Κάτι πήγε στραβά...", Toast.LENGTH_SHORT).show();
-                                finish();
                             }
                         }
                     });
+        } else {
+            Toast.makeText(getApplicationContext(), "Οι αλλαγές αποθηκεύτηκαν!", Toast.LENGTH_SHORT).show();
         }
     }
 
