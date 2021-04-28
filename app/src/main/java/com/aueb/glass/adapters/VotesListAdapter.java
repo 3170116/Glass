@@ -13,13 +13,23 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.aueb.glass.MainActivity;
 import com.aueb.glass.R;
 import com.aueb.glass.models.Event;
 import com.aueb.glass.models.VotingOption;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 
 public class VotesListAdapter extends BaseAdapter {
@@ -77,7 +87,36 @@ public class VotesListAdapter extends BaseAdapter {
                             myOptions.clear();
                             notifyDataSetChanged();
 
-                            ////TODO να στελνει ειδοποιηση
+                            votingOptions
+                                    .whereEqualTo("eventId", myEvent.getId())
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (DocumentSnapshot doc: task.getResult()) {
+                                                    if (Integer.parseInt(doc.getData().get("typeId").toString()) == option.getTypeId()) {
+                                                        Map<String, Object> data = new HashMap<>();
+
+                                                        data.put("eventId", option.getEventId());
+                                                        data.put("typeId", option.getTypeId());
+                                                        data.put("text", option.getText());
+                                                        data.put("votes", Integer.parseInt(doc.getData().get("votes").toString()) + 1);
+
+                                                        votingOptions
+                                                                .document(doc.getId())
+                                                                .set(data)
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
                         }
                     }, 700);
                 }
@@ -89,7 +128,7 @@ public class VotesListAdapter extends BaseAdapter {
         if (!myEvent.getOrganizerId().equals(MainActivity.account.getId())) {
             votesText.setVisibility(View.GONE);
         } else {
-            votesText.setText("Ψήφοι: 0");
+            votesText.setText("Ψήφοι: " + option.getVotes());
         }
 
         return convertView;
@@ -120,5 +159,9 @@ public class VotesListAdapter extends BaseAdapter {
             }
         }
         return false;
+    }
+
+    public void clear() {
+        this.myOptions.clear();
     }
 }

@@ -40,6 +40,7 @@ public class OnlineEventActivity extends AppCompatActivity {
     private WebView youtubeVideo;
     private ListView votesList;
     private MaterialButton optionsButton;
+    private MaterialButton refreshButton;
 
     private FragmentManager fragmentManager;
     private FrameLayout onlineEventFrameLayout;
@@ -47,6 +48,8 @@ public class OnlineEventActivity extends AppCompatActivity {
     private Event myEvent;
     private List<VotingOption> myOptions;
     private CollectionReference votingOptions;
+
+    private VotesListAdapter votesListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class OnlineEventActivity extends AppCompatActivity {
         youtubeVideo = findViewById(R.id.youtubeVideo);
         votesList = findViewById(R.id.optionsList);
         optionsButton = findViewById(R.id.optionsButton);
+        refreshButton = findViewById(R.id.refreshButton);
 
 
         if (myEvent.getUrl() != null && !myEvent.getUrl().isEmpty()) {
@@ -85,8 +89,40 @@ public class OnlineEventActivity extends AppCompatActivity {
         }
 
 
-        VotesListAdapter votesListAdapter = new VotesListAdapter(getApplicationContext(), votingOptions, myEvent, new ArrayList<>());
+        votesListAdapter = new VotesListAdapter(getApplicationContext(), votingOptions, myEvent, new ArrayList<>());
         votesList.setAdapter(votesListAdapter);
+
+        refreshOptions();
+
+
+        if (myEvent.getOrganizerId().equals(MainActivity.account.getId())) {
+            optionsButton.setVisibility(View.VISIBLE);
+            optionsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    VotingOptionsFragment votingOptionsFragment = new VotingOptionsFragment(votingOptions, votesListAdapter, myOptions);
+                    votingOptionsFragment.show(fragmentManager, "Edit Options");
+                }
+            });
+        }
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshOptions();
+            }
+        });
+
+
+        myEvent.initStartDate();
+        if (!myEvent.hasStarted()) {
+            Toast.makeText(getApplicationContext(), "Η εκδήλωση δεν έχει ξεκινήσει ακόμα!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private void refreshOptions() {
+        votesListAdapter.clear();
 
         votingOptions
                 .whereEqualTo("eventId", myEvent.getId())
@@ -129,24 +165,5 @@ public class OnlineEventActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
-        if (myEvent.getOrganizerId().equals(MainActivity.account.getId())) {
-            optionsButton.setVisibility(View.VISIBLE);
-            optionsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    VotingOptionsFragment votingOptionsFragment = new VotingOptionsFragment(votingOptions, votesListAdapter, myOptions);
-                    votingOptionsFragment.show(fragmentManager, "Edit Options");
-                }
-            });
-        }
-
-
-        myEvent.initStartDate();
-        if (!myEvent.hasStarted()) {
-            Toast.makeText(getApplicationContext(), "Η εκδήλωση δεν έχει ξεκινήσει ακόμα!", Toast.LENGTH_LONG).show();
-        }
     }
 }
