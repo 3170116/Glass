@@ -27,6 +27,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,13 +38,19 @@ public class VotesListAdapter extends BaseAdapter {
     private Context context;
     private Event myEvent;
     private List<VotingOption> myOptions;
+    private List<VotingOption> myVotes;
     private CollectionReference votingOptions;
 
-    public VotesListAdapter(Context context, CollectionReference votingOptions, Event myEvent, List<VotingOption> myOptions) {
+    private boolean disableAll;
+
+    public VotesListAdapter(Context context, CollectionReference votingOptions, Event myEvent, List<VotingOption> myVotes) {
         this.context = context;
         this.votingOptions = votingOptions;
         this.myEvent = myEvent;
-        this.myOptions = myOptions;
+        this.myVotes = myVotes;
+        this.myOptions = new ArrayList<>();
+
+        this.disableAll = false;
     }
 
     @Override
@@ -74,11 +81,22 @@ public class VotesListAdapter extends BaseAdapter {
         optionRadio.setText(option.getText());
         optionRadio.setChecked(false);
 
+        if (disableAll) {
+            optionRadio.setEnabled(false);
+        }
+
+        for (VotingOption vote: myVotes) {
+            if (vote.getId().equals(option.getId())) {
+                optionRadio.setChecked(true);
+            }
+        }
+
         if (!myEvent.getOrganizerId().equals(MainActivity.account.getId())) {
             optionRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     option.setSelected(b);
+                    myVotes.add(option);
 
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -163,5 +181,14 @@ public class VotesListAdapter extends BaseAdapter {
 
     public void clear() {
         this.myOptions.clear();
+    }
+
+    public void resetDisableAll() {
+        for (VotingOption vote: myVotes) {
+            for (VotingOption option: myOptions)
+                if (vote.getId().equals(option.getId())) {
+                    this.disableAll = true;
+                }
+        }
     }
 }

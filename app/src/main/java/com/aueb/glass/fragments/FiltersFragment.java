@@ -70,6 +70,7 @@ public class FiltersFragment extends BottomSheetDialogFragment {
         });
         calendar.setTime(new Date(now));
 
+        eventCategoryText.setText("Σεμινάριο");
         eventCategoryText.setAdapter(categoriesAdapter);
 
         searchButton.setOnClickListener(new View.OnClickListener() {

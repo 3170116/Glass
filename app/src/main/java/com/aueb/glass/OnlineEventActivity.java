@@ -47,6 +47,7 @@ public class OnlineEventActivity extends AppCompatActivity {
 
     private Event myEvent;
     private List<VotingOption> myOptions;
+    private List<VotingOption> myVotes;
     private CollectionReference votingOptions;
 
     private VotesListAdapter votesListAdapter;
@@ -60,6 +61,7 @@ public class OnlineEventActivity extends AppCompatActivity {
         onlineEventFrameLayout = findViewById(R.id.onlineEventFrameLayout);
 
         myOptions = new ArrayList<>();
+        myVotes = new ArrayList<>();
         this.votingOptions = MainActivity.firebaseFirestore.collection("VotingOptions");
     }
 
@@ -89,7 +91,7 @@ public class OnlineEventActivity extends AppCompatActivity {
         }
 
 
-        votesListAdapter = new VotesListAdapter(getApplicationContext(), votingOptions, myEvent, new ArrayList<>());
+        votesListAdapter = new VotesListAdapter(getApplicationContext(), votingOptions, myEvent, myVotes);
         votesList.setAdapter(votesListAdapter);
 
         refreshOptions();
@@ -123,6 +125,7 @@ public class OnlineEventActivity extends AppCompatActivity {
 
     private void refreshOptions() {
         votesListAdapter.clear();
+        myOptions.clear();
 
         votingOptions
                 .whereEqualTo("eventId", myEvent.getId())
@@ -146,6 +149,7 @@ public class OnlineEventActivity extends AppCompatActivity {
                                 votesListAdapter.addOption(option);
                             }
 
+                            votesListAdapter.resetDisableAll();
                             votesListAdapter.notifyDataSetChanged();
 
                             String[] allOptions = getResources().getStringArray(R.array.availableOptions);
