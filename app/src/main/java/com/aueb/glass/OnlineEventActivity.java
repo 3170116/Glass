@@ -88,6 +88,8 @@ public class OnlineEventActivity extends AppCompatActivity {
             youtubeVideo.getSettings().setUseWideViewPort(true);
 
             youtubeVideo.loadData("<iframe width=\"100%\" height=\"600px\" src=\"" + myEvent.getUrl() +"\" frameborder=\"0\"  allowfullscreen/>", "text/html", "utf-8");
+        } else {
+            youtubeVideo.setVisibility(View.GONE);
         }
 
 

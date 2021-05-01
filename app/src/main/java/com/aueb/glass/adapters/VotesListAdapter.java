@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -127,9 +128,11 @@ public class VotesListAdapter extends BaseAdapter {
                                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                     @Override
                                                                     public void onSuccess(Void aVoid) {
-
+                                                                        Toast.makeText(context.getApplicationContext(), "Η ψήφος καταχωρήθηκε!", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 });
+
+                                                        break;
                                                     }
                                                 }
                                             }

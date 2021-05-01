@@ -130,6 +130,7 @@ public class EditEventFragment extends BottomSheetDialogFragment {
             delete.setVisibility(View.VISIBLE);
         } else {
             calendar.setTime(new Date(now));
+            category.setText("Σεμινάριο");
         }
 
         category.setAdapter(categoriesAdapter);

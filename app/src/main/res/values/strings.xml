@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Online Events</string>
+    <string name="app_name">EventTick</string>
 
     <string name="save">Αποθήκευση</string>
     <string name="required">Υποχρεωτικό *</string>
