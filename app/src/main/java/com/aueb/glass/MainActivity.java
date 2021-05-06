@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             if (myMenu != null) {
                 myMenu.findItem(R.id.more).setVisible(true);
 
-                if (sharedPreferences.getBoolean("IsOrganizer", false)) {
+                if (sharedPreferences.getBoolean("IsOrganizer", true)) {
                     myMenu.findItem(R.id.events).setVisible(true);
                 } else {
                     myMenu.findItem(R.id.events).setVisible(false);
@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (account == null) {
             menu.findItem(R.id.more).setVisible(false);
+            menu.findItem(R.id.events).setVisible(false);
         }
         return true;
     }
